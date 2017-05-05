@@ -1,1 +1,1 @@
-web: node upload_fortunes.js
+web: node server.js
