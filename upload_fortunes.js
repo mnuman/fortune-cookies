@@ -1,8 +1,9 @@
 "use strict";
 var fs = require("fs");
 var mongo = require('mongodb').MongoClient;
-// set DB_URL in format mongodb://username:password@host:port/database
-mongo.connect(process.env.DB_URL, (err, db) => {
+const WAITTIMEBEFOREEXIT = 10;  // wait time in seconds before exiting
+// set MONGODB_URI in format mongodb://username:password@host:port/database
+mongo.connect(process.env.MONGODB_URI, (err, db) => {
     if (err) throw err;
     var fortune_cookies = db.collection('fortunecookies');
     console.log('We\'re connected to MONGO now ...');
@@ -25,5 +26,6 @@ mongo.connect(process.env.DB_URL, (err, db) => {
             throw err;
         }
     }));
-    console.log('Done ... End the upload process');
+    console.log('Waiting for ' + WAITTIMEBEFOREEXIT + ' before exiting ...');
+    setTimeout(function(){process.exit(0);}, WAITTIMEBEFOREEXIT*1000);
 });
